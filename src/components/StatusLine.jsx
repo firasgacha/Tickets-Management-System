@@ -3,8 +3,9 @@ import Task from "./Task";
 import { useState } from "react";
 
 export default function StatusLine(props) {
-    const { status, tasks, addTask, deleteTask, addEmptyTask, moveTask } = props;
-    const [show, setShow] = useState(false);
+    const { status, tasks, addTask, deleteTask, addEmptyTask, moveTask, editTask } = props;
+    const [showAdd, setshowAdd] = useState(false);
+    const [showEdit, setshowEdit] = useState(false);
 
     let taskList, tasksForStatus;
 
@@ -17,9 +18,12 @@ export default function StatusLine(props) {
             return task.status === status;
         });
     }
-
-    function showHide() {
-        setShow(!show);
+    
+    function showHideAdd() {
+        setshowAdd(!showAdd);
+    }
+    function showHideEdit() {
+        setshowEdit(!showEdit);
     }
     if (tasksForStatus) {
         taskList = tasksForStatus.map((task) => {
@@ -30,8 +34,11 @@ export default function StatusLine(props) {
                     moveTask={(id, status) => moveTask(id, status)}
                     key={task.id}
                     task={task}
-                    show={show}
-                    showHide={showHide}
+                    editTask={(task) => editTask(task)}
+                    showAdd={showAdd}
+                    showEdit={showEdit}
+                    showHideAdd={showHideAdd}
+                    showHideEdit={showHideEdit}
                 />
             );
         });
@@ -41,7 +48,7 @@ export default function StatusLine(props) {
         <div className="statusLine">
             <h3>{status}</h3>
             {taskList}
-            <button onClick={() => { handleAddEmpty(); setShow(!show)}} className="button addTask">
+            <button onClick={() => { handleAddEmpty(); setshowAdd(!showAdd) }} className="button addTask">
                 +
             </button>
         </div>

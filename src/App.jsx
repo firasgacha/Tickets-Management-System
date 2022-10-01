@@ -24,11 +24,26 @@ function App() {
         id: newTaskId,
         title: "",
         description: "",
-        urgency: "",
+        deadLine: "",
+        created:"",
         status: status,
       },
     ]);
   }
+
+
+
+
+  function editTask(taskToEdit) {
+    const task = tasks.find((t) => t.id === taskToEdit.id);
+    task.title = taskToEdit.title;
+    task.description = taskToEdit.description;
+    setTasks((tasks) => [...tasks]);
+    saveTasksToLocalStorage(tasks);
+  }
+
+
+
 
   function addTask(taskToAdd) {
     let filteredTasks = tasks.filter((task) => {
@@ -95,6 +110,7 @@ function App() {
             addTask={addTask}
             deleteTask={deleteTask}
             moveTask={moveTask}
+            editTask={editTask}
             status="To Do"
           />
           <StatusLine
@@ -103,6 +119,7 @@ function App() {
             addTask={addTask}
             deleteTask={deleteTask}
             moveTask={moveTask}
+            editTask={editTask}
             status="In Progress"
           />
           <StatusLine
@@ -111,6 +128,7 @@ function App() {
             addTask={addTask}
             deleteTask={deleteTask}
             moveTask={moveTask}
+            editTask={editTask}
             status="Code Review"
           />
           <StatusLine
@@ -119,6 +137,7 @@ function App() {
             addTask={addTask}
             deleteTask={deleteTask}
             moveTask={moveTask}
+            editTask={editTask}
             status="Done"
           />
         </section>
